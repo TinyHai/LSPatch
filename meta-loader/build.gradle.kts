@@ -7,6 +7,12 @@ plugins {
 android {
     defaultConfig {
         multiDexEnabled = false
+
+        externalNativeBuild {
+            cmake {
+                cppFlags("-fno-threadsafe-statics")
+            }
+        }
     }
 
     buildTypes {
@@ -15,6 +21,13 @@ android {
             proguardFiles("proguard-rules.pro")
         }
     }
+
+    externalNativeBuild {
+        cmake {
+            path("src/main/jni/CMakeLists.txt")
+        }
+    }
+
     namespace = "org.lsposed.lspatch.metaloader"
 }
 
@@ -32,8 +45,20 @@ androidComponents.onVariants { variant ->
         into("${rootProject.projectDir}/out/assets/${variant.name}/lspatch")
     }
 
+    task<Copy>("copySo$variantCapped") {
+        dependsOn("assemble$variantCapped")
+        from(
+            fileTree(
+                "dir" to "$buildDir/intermediates/stripped_native_libs/${variant.name}/out/lib",
+                "include" to listOf("**/libmeta_loader.so")
+            )
+        )
+        into("${rootProject.projectDir}/out/assets/${variant.name}/lspatch/so")
+    }
+
     task("copy$variantCapped") {
         dependsOn("copyDex$variantCapped")
+        dependsOn("copySo$variantCapped")
 
         doLast {
             println("Loader dex has been copied to ${rootProject.projectDir}${File.separator}out")

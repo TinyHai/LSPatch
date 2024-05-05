@@ -1,6 +1,6 @@
--keep class org.lsposed.lspatch.metaloader.LSPAppComponentFactoryStub {
-    public static byte[] dex;
-    <init>();
+-keep class cn.tinyhai.xposed.meta_loader.LoaderEntry {
+    public static <fields>;
+    public static <methods>;
 }
 -dontwarn androidx.annotation.NonNull
 -dontwarn androidx.annotation.Nullable

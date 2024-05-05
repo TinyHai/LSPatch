@@ -31,14 +31,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "LSPatch"
 include(
-    ":apkzlib",
     ":core",
     ":hiddenapi:bridge",
     ":hiddenapi:stubs",
-    ":jar",
-    ":manager",
     ":meta-loader",
-    ":patch",
     ":patch-loader",
     ":services:daemon-service",
     ":services:manager-service",
