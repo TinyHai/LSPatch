@@ -61,7 +61,7 @@ public class LocalAppService extends ILSPApplicationService.Stub {
 
     @Override
     public String getPrefsPath(String packageName) {
-        return new File(Environment.getDataDirectory(), "data/" + packageName + "shared_prefs").getAbsolutePath();
+        return new File(Environment.getDataDirectory(), "local/tmp/lspatch").getAbsolutePath();
     }
 
     @Override
